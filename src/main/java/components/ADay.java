@@ -1,4 +1,23 @@
+/*
+ * This file is part of ilevn/AoC2021.
+ *
+ * ilevn/AoC2021 is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * ilevn/AoC2021 is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with ilevn/AoC2021. If not, see <https://www.gnu.org/licenses/>.
+ *
+ */
 package components;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -6,15 +25,15 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public abstract class ADay {
-    public final String data;
+    private final String data;
     private List<String> linesList;
 
     /**
      * Returns a {@code List<String>} of the puzzle data.
      */
-    public List<String> getLinesList() {
+    public @NotNull List<String> getLines() {
         if (linesList == null) {
-            linesList = data.lines().toList();
+            linesList = getData().lines().toList();
         }
         return linesList;
     }
@@ -22,12 +41,16 @@ public abstract class ADay {
     /**
      * Returns the {@code String} value of the puzzle data.
      */
-    public String getData() {
+    public @NotNull String getData() {
         return data;
     }
 
     protected ADay(int year, int day) {
         data = Input.get(day, year).trim();
+    }
+
+    protected ADay(String data) {
+        this.data = data;
     }
 
     /**

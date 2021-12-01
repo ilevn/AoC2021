@@ -15,39 +15,22 @@
  * along with ilevn/AoC2021. If not, see <https://www.gnu.org/licenses/>.
  *
  */
-plugins {
-    id 'java'
-    id "com.diffplug.spotless" version "6.0.0"
-}
+package year2021;
 
-group 'com.github.ilevn.aoc2021'
-version '1.0-SNAPSHOT'
+import components.ADay;
 
-repositories {
-    mavenCentral()
-}
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(16)
+/**
+ * Common class for all solutions of AoC 2021.
+ */
+abstract class DayOf2021 extends ADay {
+    protected DayOf2021(int day) {
+        super(2021, day);
     }
-}
 
-dependencies {
-    implementation 'org.jetbrains:annotations:22.0.0'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
-    testImplementation 'org.assertj:assertj-core:3.21.0'
-}
-
-test {
-    useJUnitPlatform()
-}
-
-spotless {
-    java {
-        removeUnusedImports()
-        licenseHeaderFile("gradle/LICENCE_HEADER")
+    protected DayOf2021(String data) {
+        super(data);
     }
+
+    // method for puzzle input?
 }

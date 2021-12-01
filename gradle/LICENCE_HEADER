@@ -15,17 +15,3 @@
  * along with ilevn/AoC2021. If not, see <https://www.gnu.org/licenses/>.
  *
  */
-package components;
-
-/**
- * Unchecked class for {@link Input} exceptions.
- */
-class InputException extends RuntimeException {
-    public InputException(String message) {
-        super(message);
-    }
-
-    public InputException(String message, Throwable cause) {
-        super(message, cause);
-    }
-}
