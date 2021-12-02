@@ -18,16 +18,9 @@
 package year2021;
 
 import java.util.List;
-import java.util.regex.Pattern;
 
 public class Day2 extends DayOf2021 {
-    private final Pattern pat = Pattern.compile("(\\w+)\\s+(\\d+)");
-    private final List<Instruction> instructions = getLines().stream().map(s -> {
-        var matcher = pat.matcher(s);
-        matcher.find();
-        return Instruction.fromMatch(matcher.group(1), Integer.parseInt(matcher.group(2)));
-    }).toList();
-
+    private final List<String[]> instructions = getLines().stream().map(s -> s.split(" ", 2)).toList();
 
     Day2() {
         super(2);
@@ -47,11 +40,12 @@ public class Day2 extends DayOf2021 {
         int horizontal = 0;
         int depth = 0;
 
-        for (Instruction inst : instructions) {
-            switch (inst.direction) {
-                case "forward" -> horizontal += inst.value;
-                case "down" -> depth += inst.value;
-                case "up" -> depth -= inst.value;
+        for (String[] inst : instructions) {
+            var value = Integer.parseInt(inst[1]);
+            switch (inst[0]) {
+                case "forward" -> horizontal += value;
+                case "down" -> depth += value;
+                case "up" -> depth -= value;
             }
         }
         return depth * horizontal;
@@ -63,23 +57,17 @@ public class Day2 extends DayOf2021 {
         int depth = 0;
         int aim = 0;
 
-        for (Instruction inst : instructions) {
-            switch (inst.direction) {
+        for (String[] inst : instructions) {
+            var value = Integer.parseInt(inst[1]);
+            switch (inst[0]) {
                 case "forward" -> {
-                    depth += aim * inst.value;
-                    horizontal += inst.value;
+                    depth += aim * value;
+                    horizontal += value;
                 }
-                case "down" -> aim += inst.value;
-                case "up" -> aim -= inst.value;
+                case "down" -> aim += value;
+                case "up" -> aim -= value;
             }
         }
-
         return depth * horizontal;
-    }
-
-    record Instruction(String direction, int value) {
-        static Instruction fromMatch(String direction, int value) {
-            return new Instruction(direction, value);
-        }
     }
 }
