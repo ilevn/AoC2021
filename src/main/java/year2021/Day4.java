@@ -19,6 +19,8 @@ package year2021;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static java.util.Arrays.stream;
 import static java.util.Map.entry;
@@ -29,38 +31,29 @@ public class Day4 extends DayOf2021 {
     private final List<Board> boards = stream(getData().split("\n{2}")).skip(1)
             .map(s -> Board.parseArray(s.split("\n"))).toList();
 
-    private static final class Field {
-        private final int value;
-        private boolean marked = false;
-
-        private Field(int value) {
-            this.value = value;
-        }
-    }
-
-    private record Board(List<List<Field>> grid) {
+    private record Board(List<List<Integer>> grid) {
         static Board parseArray(String[] arr) {
             var mapped = range(0, 5)
                     .mapToObj(i -> stream(arr[i].trim().split("\s+"))
-                            .map(o -> new Field(Integer.parseInt(o)))
-                            .toList()).toList();
+                            .map(Integer::parseInt)
+                            .collect(Collectors.toList())).toList();
             return new Board(mapped);
         }
 
         boolean hasBingo() {
-            return grid.stream().anyMatch(row -> row.stream().allMatch(f -> f.marked))
-                    || range(0, 5).anyMatch(column -> grid.stream().allMatch(c -> c.get(column).marked));
+            return grid.stream().anyMatch(row -> row.stream().allMatch(Objects::isNull))
+                    || range(0, 5).anyMatch(column -> grid.stream().allMatch(c -> c.get(column) == null));
         }
 
         int sum() {
-            return grid.stream()
-                    .flatMapToInt(row -> row.stream().filter(f -> !f.marked).mapToInt(f -> f.value)).sum();
+            return grid.stream().flatMapToInt(row -> row.stream().mapToInt(f -> f != null ? f : 0)).sum();
         }
 
-        void markWith(int number) {
-            for (List<Field> row : grid) {
-                for (Field f : row) {
-                    if (f.value == number) f.marked = true;
+        void draw(int number) {
+            for (List<Integer> row : grid) {
+                var it = row.listIterator();
+                while (it.hasNext()) {
+                    if (Objects.equals(it.next(), number)) it.set(null);
                 }
             }
         }
@@ -78,7 +71,7 @@ public class Day4 extends DayOf2021 {
     public Object first() {
         for (Integer draw : draws) {
             for (Board board : boards) {
-                board.markWith(draw);
+                board.draw(draw);
                 if (board.hasBingo()) {
                     return draw * board.sum();
                 }
@@ -92,7 +85,7 @@ public class Day4 extends DayOf2021 {
         return boards.stream().map(b -> {
             for (int i = 0; i < draws.size(); i++) {
                 int draw = draws.get(i);
-                b.markWith(draw);
+                b.draw(draw);
                 if (b.hasBingo()) return entry(i, b.sum() * draw);
             }
             return null;
