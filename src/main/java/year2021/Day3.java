@@ -20,9 +20,10 @@ package year2021;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
+import java.util.Map.Entry;
 import java.util.function.BinaryOperator;
 
+import static java.util.Map.Entry.comparingByKey;
 import static java.util.Map.Entry.comparingByValue;
 import static java.util.function.BinaryOperator.maxBy;
 import static java.util.function.BinaryOperator.minBy;
@@ -31,10 +32,8 @@ import static java.util.stream.Collectors.groupingBy;
 
 public class Day3 extends DayOf2021 {
     private final int columnLength = getLines().get(0).length();
-    private final Comparator<Map.Entry<Character, Long>> comparator = (o1, o21) -> {
-        var res = o1.getValue().compareTo(o21.getValue());
-        return (res != 0) ? res : o1.getKey().compareTo(o21.getKey());
-    };
+    private final Comparator<Entry<Character, Long>> comparator = Entry.<Character, Long>comparingByValue()
+            .thenComparing(comparingByKey());
 
     Day3() {
         super(3);
@@ -48,7 +47,7 @@ public class Day3 extends DayOf2021 {
         solve(Day3.class);
     }
 
-    private char findOccurrence(List<String> source, int index, BinaryOperator<Map.Entry<Character, Long>> op) {
+    private char findOccurrence(List<String> source, int index, BinaryOperator<Entry<Character, Long>> op) {
         var grouped = source.stream().collect(groupingBy(s -> s.charAt(index), counting()));
         //noinspection OptionalGetWithoutIsPresent
         return grouped.entrySet().stream().reduce(op).get().getKey();
