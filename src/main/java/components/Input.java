@@ -95,6 +95,7 @@ public final class Input {
         String content;
 
         if (file.exists()) {
+            System.out.println("~~ Using cached input file. ~~");
             try {
                 content = Files.readString(file.toPath());
             } catch (IOException e) {
@@ -103,6 +104,7 @@ public final class Input {
         } else {
             content = getHttp(day, year);
             try {
+                System.out.println("~~ Using downloaded input. ~~");
                 //noinspection ResultOfMethodCallIgnored
                 file.getParentFile().mkdirs();
                 Files.write(file.toPath(), content.getBytes());

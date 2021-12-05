@@ -35,6 +35,7 @@ public class Day3 extends DayOf2021 {
     private final Comparator<Entry<Character, Long>> comparator = Entry.<Character, Long>comparingByValue()
             .thenComparing(comparingByKey());
 
+    @SuppressWarnings("unused")
     Day3() {
         super(3);
     }

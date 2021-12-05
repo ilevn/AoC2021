@@ -25,6 +25,8 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public abstract class ADay {
+    private final int year;
+    private final int day;
     private final String data;
     private List<String> linesList;
 
@@ -46,10 +48,13 @@ public abstract class ADay {
     }
 
     protected ADay(int year, int day) {
+        this.year = year;
+        this.day = day;
         data = Input.get(day, year).trim();
     }
 
     protected ADay(String data) {
+        year = day = 0;
         this.data = data;
     }
 
@@ -95,6 +100,7 @@ public abstract class ADay {
             return;
         }
 
+        System.out.printf("Year %d, day %d%n%n", aDay.year, aDay.day);
         System.out.println("First: " + evalSolution(aDay::first));
         System.out.println("Second: " + evalSolution(aDay::second));
     }

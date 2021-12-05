@@ -34,12 +34,12 @@ class Day2Test {
             forward 2""");
 
     @Test
-    void first() {
+    void final_depth_should_be_150() {
         assertThat(day2.first()).isEqualTo(150);
     }
 
     @Test
-    void second() {
+    void final_horizontal_position_should_be_900() {
         assertThat(day2.second()).isEqualTo(900);
     }
 }

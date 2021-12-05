@@ -31,6 +31,16 @@ public class Day4 extends DayOf2021 {
     private final List<Board> boards = stream(getData().split("\n{2}")).skip(1)
             .map(s -> Board.parseArray(s.split("\n"))).toList();
 
+
+    @SuppressWarnings("unused")
+    Day4() {
+        super(4);
+    }
+
+    Day4(String data) {
+        super(data);
+    }
+
     private record Board(List<List<Integer>> grid) {
         static Board parseArray(String[] arr) {
             var mapped = range(0, 5)
@@ -57,14 +67,6 @@ public class Day4 extends DayOf2021 {
                 }
             }
         }
-    }
-
-    public Day4() {
-        super(4);
-    }
-
-    Day4(String data) {
-        super(data);
     }
 
     @Override

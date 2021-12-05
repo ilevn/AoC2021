@@ -25,6 +25,7 @@ import static utils.Utils.sliding;
 public class Day1 extends DayOf2021 {
     private final List<Integer> nums = getLines().stream().mapToInt(Integer::parseInt).boxed().toList();
 
+    @SuppressWarnings("unused")
     Day1() {
         super(1);
     }

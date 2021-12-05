@@ -22,6 +22,7 @@ import java.util.List;
 public class Day2 extends DayOf2021 {
     private final List<String[]> instructions = getLines().stream().map(s -> s.split(" ", 2)).toList();
 
+    @SuppressWarnings("unused")
     Day2() {
         super(2);
     }

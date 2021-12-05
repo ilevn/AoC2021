@@ -31,6 +31,4 @@ abstract class DayOf2021 extends ADay {
     protected DayOf2021(String data) {
         super(data);
     }
-
-    // method for puzzle input?
 }
